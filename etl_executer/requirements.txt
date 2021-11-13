@@ -1,0 +1,4 @@
+pymongo==3.11.2
+sqlalchemy
+psycopg2
+vaderSentiment
