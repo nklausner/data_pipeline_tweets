@@ -1,0 +1,34 @@
+version: '3'
+services:
+    tweet_listener: 
+        build: tweet_listener/ 
+        volumes:
+        - ./tweet_listener/:/app_folder 
+        depends_on:
+        - mongodb
+    mongodb:
+        image: mongo
+        ports:
+        - 27017:27017
+    etl_executer:
+        build: etl_executer/
+        volumes:
+        - ./etl_executer/:/app_folder
+        depends_on: 
+        - mongodb
+        - postgresdb
+    postgresdb:
+        image: postgres
+        ports:
+        - 5555:5432
+        environment:
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=1234
+    metabase:
+        image: metabase/metabase
+        ports:
+        - 3000:3000
+        depends_on:
+        - postgresdb
+        
+        
